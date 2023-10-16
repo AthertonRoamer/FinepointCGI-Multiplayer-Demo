@@ -10,8 +10,12 @@ var syncPos = Vector2(0, 0)
 var syncRot = 0
 @export var bullet : PackedScene
 
+var display_name := ""
+
 func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	$DisplayName.text = display_name
+	
 	
 @rpc("any_peer", "call_local")
 func fire_bullet():

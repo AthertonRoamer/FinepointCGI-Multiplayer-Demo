@@ -138,7 +138,7 @@ properties/3/sync = true
 properties/3/watch = false
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(0, -30)
+position = Vector2(-3, -32)
 scale = Vector2(2, 2)
 script = ExtResource("1_jjvsp")
 bullet = ExtResource("2_sqquf")
@@ -167,3 +167,9 @@ position = Vector2(21, -1)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_w6tap")
+
+[node name="DisplayName" type="Label" parent="."]
+offset_left = -21.0
+offset_top = 13.0
+offset_right = 40.0
+offset_bottom = 36.0
