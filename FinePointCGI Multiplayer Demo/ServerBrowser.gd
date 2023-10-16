@@ -2,6 +2,7 @@ extends Control
 
 signal found_server
 signal server_removed
+signal joinGame
 
 @export var listenPort : int = 8911
 @export var broadcastPort : int = 8912
@@ -55,6 +56,7 @@ func _process(delta):
 		currentInfo.get_node("Ip").text = serverip
 		currentInfo.get_node("PlayerCount").text = str(roomInfo.playerCount)
 		$Panel/VBoxContainer.add_child(currentInfo)
+		currentInfo.joinGame.connect(joinedByIp)
 			
 			
 func setUpBroadCast(name):
@@ -92,3 +94,6 @@ func clean_up():
 	
 func _exit_tree():
 	clean_up()
+	
+func joinedByIp(ip):
+	joinGame.emit(ip)

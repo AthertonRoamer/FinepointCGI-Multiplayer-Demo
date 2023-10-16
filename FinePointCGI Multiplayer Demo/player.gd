@@ -12,6 +12,13 @@ var syncRot = 0
 
 func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	
+@rpc("any_peer", "call_local")
+func fire_bullet():
+	var b = bullet.instantiate()
+	b.global_position = $GunRotation/BulletSpawn.global_position
+	b.rotation_degrees = $GunRotation.rotation_degrees
+	get_tree().root.add_child(b) 
 
 func _physics_process(delta):
 	if GameManager.active and $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
@@ -30,11 +37,10 @@ func _physics_process(delta):
 		syncPos = global_position
 		syncRot = rotation_degrees
 			
+		
 		if Input.is_action_just_pressed("Fire"):
-			var b = bullet.instantiate()
-			b.global_position = $GunRotation/BulletSpawn.global_position
-			b.rotation_degrees = $GunRotation.rotation_degrees
-			get_tree().root.add_child(b) 
+			fire_bullet.rpc()
+			
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
@@ -48,3 +54,5 @@ func _physics_process(delta):
 	else:
 		global_position = global_position.lerp(syncPos, 0.5)
 		rotation_degrees = lerpf(rotation_degrees, syncRot, 0.5)
+		
+

@@ -12,7 +12,7 @@ func _ready():
 	multiplayer.peer_disconnected.connect(player_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
-
+	$ServerBrowser.joinGame.connect(JoinByIp)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -76,10 +76,15 @@ func _on_host_pressed():
 	
 
 func _on_join_pressed():
+	JoinByIp(Address)
+	
+	
+func JoinByIp(ip):
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client(Address, port)
+	peer.create_client(ip, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
+	
 
 
 func _on_start_pressed():
